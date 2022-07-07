@@ -1,0 +1,23 @@
+image:
+  name: 840225427682.dkr.ecr.us-east-1.amazonaws.com/mavtek-cli:latest
+  aws:
+    access-key: $AWS_MAVTEK_ARTIFACTS_ID
+    secret-key: $AWS_MAVTEK_ARTIFACTS_KEY
+pipelines:
+  default:
+    - step:
+        name: Run CI
+        script:
+          - AWS_ACCESS_KEY_ID="$AWS_MAVTEK_ARTIFACTS_ID"
+            AWS_SECRET_ACCESS_KEY="$AWS_MAVTEK_ARTIFACTS_KEY" mavtek run ci
+        services:
+          - docker
+        caches:
+          - docker
+          - dot-cache
+definitions:
+  services:
+    docker:
+      memory: 3072
+  caches:
+    dot-cache: .cache

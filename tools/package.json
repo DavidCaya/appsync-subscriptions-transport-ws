@@ -1,0 +1,19 @@
+{
+  "name": "tools",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "build": "tsc"
+  },
+  "packageManager": "yarn@3.2.1",
+  "dependencies": {
+    "@mdk/node": "^5.13.0",
+    "@mdk/pipeline": "^5.13.0",
+    "@mdk/semantic-release": "^5.13.0",
+    "@mdk/tasks": "^5.13.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.3",
+    "typescript": "^4.7.4"
+  }
+}

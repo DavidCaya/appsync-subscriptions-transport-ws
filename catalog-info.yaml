@@ -1,0 +1,12 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: appsync-subscriptions-transport-ws
+  description: Appsync Subscriptions support
+  # annotations:
+  #   backstage.io/techdocs-ref: dir:.
+spec:
+  type: library
+  lifecycle: experimental
+  owner: live-division
+  

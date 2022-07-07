@@ -1,0 +1,9 @@
+type: library
+name: appsync-subscriptions-transport-ws
+owner: division/live
+description: Appsync Subscriptions support
+impact: customers
+lifecycle: experimental
+tasks_definitions:
+  path: tools
+  entry_file: tasks.js
