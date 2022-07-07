@@ -333,7 +333,8 @@ export class SubscriptionClient {
         this.checkOperationOptions(processedOptions, handler);
         if (this.operations[opId]) {
           this.operations[opId] = { options: processedOptions, handler };
-          this.sendMessage(opId, MessageTypes.GQL_START, processedOptions);
+          // this.sendMessage(opId, MessageTypes.GQL_START, processedOptions);
+          this.sendSubMessage(opId, MessageTypes.GQL_START, processedOptions)
         }
       })
       .catch(error => {
@@ -445,6 +446,24 @@ export class SubscriptionClient {
     };
   }
 
+  private buildSubMessage(id: string, type: string, payload: any) {
+    const payloadToReturn = payload && payload.query ?
+      {
+        ...payload,
+        query: typeof payload.query === 'string' ? payload.query : print(payload.query),
+      } :
+      payload;
+
+    return {
+      id,
+      type,
+      payload: {
+        data: typeof payload.query === 'string' ? payload.query : print(payload.query),
+      } 
+    };
+  }
+
+
   // ensure we have an array of errors
   private formatErrors(errors: any): FormatedError[] {
     if (Array.isArray(errors)) {
@@ -470,6 +489,10 @@ export class SubscriptionClient {
 
   private sendMessage(id: string, type: string, payload: any) {
     this.sendMessageRaw(this.buildMessage(id, type, payload));
+  }
+
+  private sendSubMessage(id: string, type: string, payload: any) {
+    this.sendMessageRaw(this.buildSubMessage(id, type, payload));
   }
 
   // send message, or queue it if connection is not open
