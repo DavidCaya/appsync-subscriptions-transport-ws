@@ -1,6 +1,6 @@
 import { installDeps, runNodeCommand } from '@mdk/node';
 import { declareTask } from '@mdk/tasks';
-import { release } from '@mdk/semantic-release';
+import { release, publishPlugin } from '@mdk/semantic-release';
 import { declarePipeline } from '@mdk/pipeline';
 
 declareTask('install-deps', async () => installDeps());
@@ -11,9 +11,13 @@ declareTask('test', ['install-deps'], async () => runNodeCommand('yarn test'));
 
 declareTask('build', ['install-deps'], async () => runNodeCommand('yarn build'));
 
+declareTask('prepare', async () => runNodeCommand('yarn prepublishOnly'))
+
 // declareTask('release', ['lint', 'test', 'build'], async (task) => {
-declareTask('release', ['build'], async (task) => {
-  await release({ enableNpmPublish: true });
+declareTask('release', ['prepare'], async (task) => {
+  await release({ 
+    enableNpmPublish: true,
+  });
 });
 
 declareTask('ci', ['release']);
